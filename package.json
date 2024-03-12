@@ -1,0 +1,42 @@
+{
+  "name": "TurtleAI",
+  "version": "0.1.0",
+  "bin": {
+    "TurtleAI": "bin/TurtleAI.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "jest",
+    "cdk": "cdk"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.130",
+    "@types/jest": "^29.5.8",
+    "@types/node": "20.9.1",
+    "@types/uuid": "^9.0.7",
+    "aws-cdk": "2.113.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "ts-node": "^10.9.1",
+    "typescript": "~5.2.2"
+  },
+  "dependencies": {
+    "@aws-cdk/aws-apigateway": "^1.204.0",
+    "@aws-cdk/aws-dynamodb": "^1.204.0",
+    "@aws-cdk/aws-lambda": "^1.204.0",
+    "@aws-cdk/aws-lambda-nodejs": "^1.204.0",
+    "@aws-sdk/client-dynamodb": "^3.468.0",
+    "@aws-sdk/client-pinpoint": "^3.476.0",
+    "@aws-sdk/client-sns": "^3.478.0",
+    "aws-cdk-lib": "2.113.0",
+    "aws-lambda": "^1.0.7",
+    "aws-sdk": "^2.1510.0",
+    "aws-sdk-mock": "^5.8.0",
+    "constructs": "^10.0.0",
+    "csv-parser": "^3.0.0",
+    "lambda-tester": "^4.0.1",
+    "source-map-support": "^0.5.21",
+    "uuid": "^9.0.1"
+  }
+}

@@ -1,0 +1,6 @@
+{
+    "ApplicationId": "todo",
+    "Lists" : {
+        "marketing" : {"SegmentId": ""}
+    }
+}

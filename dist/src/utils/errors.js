@@ -1,0 +1,18 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.UnsubscribeError = exports.UserNotFoundError = void 0;
+class UserNotFoundError extends Error {
+    constructor(message) {
+        super(message);
+        Object.setPrototypeOf(this, UserNotFoundError.prototype);
+    }
+}
+exports.UserNotFoundError = UserNotFoundError;
+class UnsubscribeError extends Error {
+    constructor(message) {
+        super(message);
+        Object.setPrototypeOf(this, UnsubscribeError.prototype);
+    }
+}
+exports.UnsubscribeError = UnsubscribeError;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZXJyb3JzLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vc3JjL3V0aWxzL2Vycm9ycy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7QUFBQSxNQUFhLGlCQUFrQixTQUFRLEtBQUs7SUFDMUMsWUFBWSxPQUFlO1FBQ3pCLEtBQUssQ0FBQyxPQUFPLENBQUMsQ0FBQztRQUNmLE1BQU0sQ0FBQyxjQUFjLENBQUMsSUFBSSxFQUFFLGlCQUFpQixDQUFDLFNBQVMsQ0FBQyxDQUFBO0lBQzFELENBQUM7Q0FDRjtBQUxELDhDQUtDO0FBRUQsTUFBYSxnQkFBaUIsU0FBUSxLQUFLO0lBQ3pDLFlBQVksT0FBZTtRQUN6QixLQUFLLENBQUMsT0FBTyxDQUFDLENBQUE7UUFDZCxNQUFNLENBQUMsY0FBYyxDQUFDLElBQUksRUFBRSxnQkFBZ0IsQ0FBQyxTQUFTLENBQUMsQ0FBQTtJQUN6RCxDQUFDO0NBQ0Y7QUFMRCw0Q0FLQyIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCBjbGFzcyBVc2VyTm90Rm91bmRFcnJvciBleHRlbmRzIEVycm9yIHtcbiAgY29uc3RydWN0b3IobWVzc2FnZTogc3RyaW5nKSB7XG4gICAgc3VwZXIobWVzc2FnZSk7XG4gICAgT2JqZWN0LnNldFByb3RvdHlwZU9mKHRoaXMsIFVzZXJOb3RGb3VuZEVycm9yLnByb3RvdHlwZSlcbiAgfVxufVxuXG5leHBvcnQgY2xhc3MgVW5zdWJzY3JpYmVFcnJvciBleHRlbmRzIEVycm9yIHtcbiAgY29uc3RydWN0b3IobWVzc2FnZTogc3RyaW5nKSB7XG4gICAgc3VwZXIobWVzc2FnZSlcbiAgICBPYmplY3Quc2V0UHJvdG90eXBlT2YodGhpcywgVW5zdWJzY3JpYmVFcnJvci5wcm90b3R5cGUpXG4gIH1cbn0iXX0=

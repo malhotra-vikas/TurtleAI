@@ -1,0 +1,4 @@
+email (required),customFields (use pipe character to delimit multiple),firstName,lastName,lists (use pipe character to delimit multiple. qfbVG=marketing),message,owner,phone,tags (tag names should use camelCasing; use pipe character like this | to delimit multiple; no need for pipe after the last tag)
+jane@example.com,preferredLanguage=English|dateOfBirth=1934-02-02,Jane,Doe,qfbVG,,hollie.champion@citypt.com,19192982020,workout|travel
+fitcollectiveclt@gmail.com,business=FitCo,Sam,Hagy,qfbVG,,,,businessPartner
+,,,,,,,,family
