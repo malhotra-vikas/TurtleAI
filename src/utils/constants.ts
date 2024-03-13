@@ -42,10 +42,11 @@ export const TEN_TEN_USERS_TABLE_SORT_KEY = 'name'
 export const TEN_TEN_CREATE_USER_LAMBDA = "TenTenCreateUsersLambda"
 export const TEN_TEN_RETRIEVE_USER_LAMBDA = "TenTenRetrieveUsersLambda"
 export const TEN_TEN_CREATE_JOURNAL_ENTRY_LAMBDA = "TenTenCreateJournalEntryLambda"
+export const TEN_TEN_GET_JOURNAL_ENTRY_LAMBDA = "TenTenGetJournalEntryLambda"
 
 
 export const TEN_TEN_USERS_TABLE_NAME_IDX = 'NameIndex'
-
+export const TEN_TEN_JOURNAL_TABLE_TIMESTAMP_IDX = "TimestampIndex"
 
 // Ten Ten Resources
 

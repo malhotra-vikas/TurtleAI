@@ -109,7 +109,7 @@ export class TurtleAIStack extends cdk.Stack {
     })
         // Adding a Global Secondary Index (GSI) for 'managerId'
         tenTenJournalTable.addGlobalSecondaryIndex({
-          indexName: "TimestampIndex", // If you have a custom index for name
+          indexName: Constants.TEN_TEN_JOURNAL_TABLE_TIMESTAMP_IDX, // If you have a custom index for name
           partitionKey: { name: 'timestamp', type: dynamodb.AttributeType.NUMBER },
           // You can include 'name' and 'email' as non-key attributes if you need to return these attributes in your query results
           projectionType: dynamodb.ProjectionType.INCLUDE,
@@ -196,6 +196,22 @@ export class TurtleAIStack extends cdk.Stack {
 
 
         // Create Lambda function for creating contacts
+        const getJournalEntryLambda = new lambdaNodejs.NodejsFunction(this, 'GetJournalEntryFunction', {
+          entry: 'src/lambda/get-journal-entry.ts', // Path to your Lambda code
+          handler: 'getJournalEntryHandler', // The exported function name for creating contacts
+          runtime: lambda.Runtime.NODEJS_18_X,
+          environment: {
+            TABLE_NAME: tenTenJournalTable.tableName,
+          },
+          role: lambdaRole,
+          timeout: cdk.Duration.minutes(5),
+          functionName: Constants.TEN_TEN_GET_JOURNAL_ENTRY_LAMBDA
+        })
+        
+        // Grant permissions to access DynamoDB
+        tenTenJournalTable.grantReadWriteData(getJournalEntryLambda)
+
+        // Create Lambda function for creating contacts
         const createJournalEntryLambda = new lambdaNodejs.NodejsFunction(this, 'CreateJournalEntryFunction', {
           entry: 'src/lambda/create-journal-entry.ts', // Path to your Lambda code
           handler: 'createJournalEntryHandler', // The exported function name for creating contacts
@@ -269,6 +285,14 @@ export class TurtleAIStack extends cdk.Stack {
     const tasksResource = api.root.addResource('tasks')
     const journalResource = api.root.addResource('journals')
 
+        // Add POST method to create Journal
+        const createJournalEntryIntegration = new apigateway.LambdaIntegration(createJournalEntryLambda)
+        journalResource.addMethod('POST', createJournalEntryIntegration)
+
+        // Add GET method to create Journal
+        const getJournalEntryIntegration = new apigateway.LambdaIntegration(getJournalEntryLambda)
+        journalResource.addMethod('GET', getJournalEntryIntegration)
+        
     // Add POST method to create contacts
     const createUserIntegration = new apigateway.LambdaIntegration(createUserLambda)
     usersResource.addMethod('POST', createUserIntegration)
