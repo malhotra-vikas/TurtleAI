@@ -64,3 +64,25 @@ export async function retrieveEntryByTimestamp(email: String, timeStamp: number)
 
     return items;
 }
+
+export async function retrieveEntryByEmail(email: String) {
+    let items;
+    const params: AWS.DynamoDB.DocumentClient.QueryInput = {
+        TableName: Constants.TEN_TEN_JOURNAL_TABLE,
+        KeyConditionExpression: "#email = :emailValue",
+        ExpressionAttributeNames: {
+            "#email": "email"
+        },
+        ExpressionAttributeValues: {
+            ":emailValue": email
+        }
+    }
+
+    // Perform the query on the DynamoDB table
+    const result = await dynamoDB.query(params).promise()
+
+    console.log("Items found " + JSON.stringify(result))
+    items = result.Items || null
+
+    return items;
+}

@@ -227,7 +227,22 @@ export class TurtleAIStack extends cdk.Stack {
         // Grant permissions to access DynamoDB
         tenTenJournalTable.grantReadWriteData(createJournalEntryLambda)
     
-    
+        // Create Lambda function for creating contacts
+        const analyseJournalEntryLambda = new lambdaNodejs.NodejsFunction(this, 'AnalyseJournalEntryFunction', {
+          entry: 'src/lambda/analyse-journal-entries.ts', // Path to your Lambda code
+          handler: 'analyseJournalEntryHandler', // The exported function name for creating contacts
+          runtime: lambda.Runtime.NODEJS_18_X,
+          environment: {
+            TABLE_NAME: tenTenJournalTable.tableName,
+          },
+          role: lambdaRole,
+          timeout: cdk.Duration.minutes(5),
+          functionName: Constants.TEN_TEN_ANALYSE_JOURNAL_ENTRY_LAMBDA
+        })
+        
+        // Grant permissions to access DynamoDB
+        tenTenJournalTable.grantReadWriteData(analyseJournalEntryLambda)
+
     // Create Lambda function for uploading the CSV into the contacts
     const bulkCreateContactLambda = new lambdaNodejs.NodejsFunction(this, 'BulkCreateContactFunction', {
       entry: 'src/lambda/create-users.ts', // Path to your Lambda code
@@ -284,6 +299,7 @@ export class TurtleAIStack extends cdk.Stack {
     const projectsResource = api.root.addResource('projects')
     const tasksResource = api.root.addResource('tasks')
     const journalResource = api.root.addResource('journals')
+    const journalAnalysisResource = api.root.addResource('journalsAnalysis')
 
         // Add POST method to create Journal
         const createJournalEntryIntegration = new apigateway.LambdaIntegration(createJournalEntryLambda)
@@ -293,6 +309,10 @@ export class TurtleAIStack extends cdk.Stack {
         const getJournalEntryIntegration = new apigateway.LambdaIntegration(getJournalEntryLambda)
         journalResource.addMethod('GET', getJournalEntryIntegration)
         
+        // Add GET method to create Journal
+        const analyseJournalEntryIntegration = new apigateway.LambdaIntegration(analyseJournalEntryLambda)
+        journalAnalysisResource.addMethod('GET', analyseJournalEntryIntegration)
+
     // Add POST method to create contacts
     const createUserIntegration = new apigateway.LambdaIntegration(createUserLambda)
     usersResource.addMethod('POST', createUserIntegration)
