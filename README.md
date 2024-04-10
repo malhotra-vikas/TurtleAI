@@ -1,4 +1,4 @@
-# CityPT Contact Communications
+# Turtle AI
 
 ## Getting Started
 
@@ -7,12 +7,12 @@
 - Install AWS CDK `npm i -g aws-cdk`
 - Install the AWS CLI: https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
 - Notate the name of your profile
-  - For example, in our /.aws/credentials file, we conventionally have a profile named `citypt-staging`.
-  - When commands below reference `$PROFILE`, include `--profile citypt-staging`
+  - For example, in our /.aws/credentials file, we conventionally have a profile named `staging`.
+  - When commands below reference `$PROFILE`, include `--profile staging`
 - Clone the repo
 - Run `npm install`
 - copy `.env.example` to `.env`
-  - Add the citypt staging account number and region
+  - Add the staging account number and region
 
 #### AWS Objects
 
@@ -28,9 +28,6 @@
 ## Setting the Account ID & Pinpoint Application ID
 
 Before you deploy, you should make sure the correct AWS account ID is included on line 1 of ```utils/constants.ts```. Next, you should make sure the PINPOINT_CONTACT_COMMUNICATIONS_APPLICATION constant in the same file is set to the correct value for the environment you're deploying to:
-
-- Staging: 9871c5e6bd70425bb81e0b1931b43f3f
-- Production: 2794595018b548c89e9ee4a88bba0b24
 
 The correct PINPOINT_CONTACT_COMMUNICATIONS_APPLICATION value should also be set in ```resources/default.json```.
 
