@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid'
 import * as Constants from '../utils/constants'
 import * as contactApi from '../api/user'
 import * as journalApi from '../api/journal'
-import { generateReport, printReport } from '../utils/report'
+import { generateReport, printReport, uploadReportToS3 } from '../utils/report'
 
 interface Note {
     id: number;
@@ -49,21 +49,28 @@ export async function analyseJournalEntryHandler(event: APIGatewayProxyEvent): P
         console.log("Response from create Lambda: 1 ", JSON.stringify(response))
         return response
     }
+    try {
+        var entries = await journalApi.retrieveEntryByEmail(email)
 
-
-    var entries = await journalApi.retrieveEntryByEmail(email)
-
-    var createdUser;
-    if (entries && entries.length > 0) {
-        console.log("Entries Fetched ", JSON.stringify(entries))
-
-        const notes: Note[] = transformToNotes(entries);
-
-        const report = generateReport(notes)
-        printReport(report)
-
-    }
-    console.log("Response from fetch journals Lambda", JSON.stringify(response))
+        var createdUser;
+        if (entries && entries.length > 0) {
+            console.log("Entries Fetched ", JSON.stringify(entries))
+    
+            const notes: Note[] = transformToNotes(entries);
+    
+            const report = generateReport(notes)
+            printReport(report)
+    
+            console.log("Uploading report to S3")
+            const reportLocation = await uploadReportToS3("1010public", report)
+            response.body = reportLocation
+            console.log("Response from fetch journals Lambda", JSON.stringify(response))
+            return response
+        } 
+    } catch (error) {
+        console.error('Error Occured:', error);
+        throw error;
+      }
     return response
 }
 

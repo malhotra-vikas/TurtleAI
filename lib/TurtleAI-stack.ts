@@ -10,6 +10,7 @@ import * as lambdaNodejs from 'aws-cdk-lib/aws-lambda-nodejs'
 import * as pinpoint from 'aws-cdk-lib/aws-pinpoint'
 import * as sns from 'aws-cdk-lib/aws-sns'
 import * as snsSubscriptions from 'aws-cdk-lib/aws-sns-subscriptions'
+import * as s3 from 'aws-cdk-lib/aws-s3';
 
 const applicationId = Constants.PINPOINT_CONTACT_COMMUNICATIONS_APPLICATION
 
@@ -243,6 +244,24 @@ export class TurtleAIStack extends cdk.Stack {
         // Grant permissions to access DynamoDB
         tenTenJournalTable.grantReadWriteData(analyseJournalEntryLambda)
 
+            // Define S3 read/write permissions
+    const s3ReadWritePolicy = new iam.PolicyStatement({
+      actions: [
+        's3:GetObject',
+        's3:PutObject',
+        's3:ListBucket'
+      ],
+      resources: [
+        'arn:aws:s3:::1010public/*',  
+        'arn:aws:s3:::1010public'    // This allows listing the bucket
+      ]
+    });
+
+        // Attach S3 permissions to the Lambda role
+        analyseJournalEntryLambda.role?.attachInlinePolicy(new iam.Policy(this, 'AnalyseJournalEntryLambdaS3Policy', {
+          statements: [s3ReadWritePolicy]
+        }));
+    
     // Create Lambda function for uploading the CSV into the contacts
     const bulkCreateContactLambda = new lambdaNodejs.NodejsFunction(this, 'BulkCreateContactFunction', {
       entry: 'src/lambda/create-users.ts', // Path to your Lambda code
